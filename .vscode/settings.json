@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "stm32g4xx_it.h": "c",
+        "hycodes.h": "c",
+        "tim.h": "c",
+        "gpio.h": "c",
+        "stm32g4xx_hal.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
+}
