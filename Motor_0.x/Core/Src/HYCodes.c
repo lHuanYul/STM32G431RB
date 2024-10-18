@@ -71,15 +71,6 @@ void Motor(void){
             state += (1 << (2-i));
         }
     }
-    /*if(HAL_GPIO_ReadPin(gpio_pins_detector[0].GPIOx, gpio_pins_detector[0].GPIO_Pin_x) == GPIO_PIN_SET) {
-        state += (1 << 2);
-    }
-    if(HAL_GPIO_ReadPin(gpio_pins_detector[1].GPIOx, gpio_pins_detector[1].GPIO_Pin_x) == GPIO_PIN_SET) {
-        state += (1 << (3-i));
-    }
-    if(HAL_GPIO_ReadPin(gpio_pins_detector[2].GPIOx, gpio_pins_detector[2].GPIO_Pin_x) == GPIO_PIN_SET) {
-        state += (1 << (3-i));
-    } */
     if(state < 1 || state > 6) return;
     for(int i = 0; i < 6; i++) { // Motor pins write (根據狀態變化輸出)
         HAL_GPIO_WritePin(gpio_pins_motor[i].GPIOx, gpio_pins_motor[i].GPIO_Pin_x, gpio_pin_state_map[state-1][i]? GPIO_PIN_SET : GPIO_PIN_RESET);
