@@ -24,4 +24,5 @@ void HYCodes_Init(void);
 void HYCodes_Main(void);
 void HYCodes_ItButtonPC13(void);
 void HYCCodes_ItMotorDetector(void);
-void Motor(void);
+void MotorSpin(void);
+void MotorSpeed(int);

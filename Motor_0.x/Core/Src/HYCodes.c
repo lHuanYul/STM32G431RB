@@ -32,13 +32,13 @@ GPIO_PinConfig gpio_pins_motor[] = { // Motor pin define
     {GPIOB, GPIO_PIN_5}  // CL
 };
 // Timer 2 (PWM) output on PA0
-int gpio_pin_state_map[6][6] = { // Motor pin output (state = -1 + H1*1 + H2*2 + H3*4)
-    {1, 0, 0, 0, 0, 1},
-    {0, 1, 1, 0, 0, 0},
-    {0, 0, 1, 0, 0, 1},
-    {0, 0, 0, 1, 1, 0},
+int gpio_pin_state_map[6][6] = { // Motor pin output (state = H1*1 + H2*2 + H3*4) 546231
     {1, 0, 0, 1, 0, 0},
-    {0, 1, 0, 0, 1, 0}
+    {0, 1, 0, 0, 1, 0},
+    {0, 0, 0, 1, 1, 0},
+    {0, 0, 1, 0, 0, 1},
+    {1, 0, 0, 0, 0, 1},
+    {0, 1, 1, 0, 0, 0}
 };
 // Init ----------------------------------------------------------------------
 void HYCodes_Init(void){
@@ -48,7 +48,7 @@ void HYCodes_Init(void){
 /* Main function */
 void HYCodes_Main(void){
     HAL_TIM_Base_Start(&htim2); // Timer 2 (PWM) start
-    Motor(); // Motor first output set
+    MotorSpin(); // Motor first output set
     while(true){
         
     }
@@ -56,17 +56,17 @@ void HYCodes_Main(void){
 // Interrupt -----------------------------------------------------------------
 /* PC13 Interrupt */
 void HYCodes_ItButtonPC13(void){
-    Motor();
+    MotorSpin();
 }
-/* PB6/7/8 Interrupt (Spin Motor)*/
+/* PB6/7/8 Interrupt (Motor Spinning) */
 void HYCCodes_ItMotorDetector(void){
-    Motor();
+    MotorSpin();
 }
 // Function ------------------------------------------------------------------
 /* Motor detect & control */
-void Motor(void){
+void MotorSpin(void){
     state = 0;
-    for(int i = 0; i < 3; i++) { // Detector Pins read (根據i的值動態加上1,2或4)
+    for(int i = 0; i < 3; i++) { // Detector Pins read (根據i的值動態加上4,2,1)
         if(HAL_GPIO_ReadPin(gpio_pins_detector[i].GPIOx, gpio_pins_detector[i].GPIO_Pin_x) == GPIO_PIN_SET) {
             state += (1 << (2-i));
         }
@@ -75,4 +75,9 @@ void Motor(void){
     for(int i = 0; i < 6; i++) { // Motor pins write (根據狀態變化輸出)
         HAL_GPIO_WritePin(gpio_pins_motor[i].GPIOx, gpio_pins_motor[i].GPIO_Pin_x, gpio_pin_state_map[state-1][i]? GPIO_PIN_SET : GPIO_PIN_RESET);
     }
+}
+/* Motor speed control */
+void MotorSpeed(int speed){
+    if(speed < 0 || speed > 100) return;
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, TIM2_AutoReload * speed / 100);
 }
