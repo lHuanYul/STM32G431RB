@@ -47,7 +47,7 @@ void HYCodes_Init(void){
 // Main ----------------------------------------------------------------------
 /* Main function */
 void HYCodes_Main(void){
-    HAL_TIM_Base_Start(&htim2); // Timer 2 (PWM) start
+    HAL_TIM_PWM_Start(&htim2); // Timer 2 (PWM) start
     MotorSpin(); // Motor first output set
     while(true){
         
