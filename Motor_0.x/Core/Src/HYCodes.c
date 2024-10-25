@@ -100,14 +100,13 @@ void MotorSpin(void){
     default:
         return;
     }
-    for(int i = 0; i < 6; i+=2) { // Motor pins write (根據狀態變化輸出)
-        int i2 = i/2;
-        if (gpio_pin_state_map[state][i]) {
-            HAL_TIM_PWM_Start(tim_pins_motor[i2].htim, tim_pins_motor[i2].Channel);
+    for(int i = 0; i < 3; i++) { // Motor pins write (根據狀態變化輸出)
+        if (gpio_pin_state_map[state][i*2]) {
+            HAL_TIM_PWM_Start(tim_pins_motor[i].htim, tim_pins_motor[i].Channel);
         } else {
-            HAL_TIM_PWM_Stop(tim_pins_motor[i2].htim, tim_pins_motor[i2].Channel);
+            HAL_TIM_PWM_Stop(tim_pins_motor[i].htim, tim_pins_motor[i].Channel);
         }
-        HAL_GPIO_WritePin(gpio_pins_motor[i+1].GPIOx, gpio_pins_motor[i+1].GPIO_Pin_x, gpio_pin_state_map[state][i+1]? GPIO_PIN_SET : GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(gpio_pins_motor[i].GPIOx, gpio_pins_motor[i].GPIO_Pin_x, gpio_pin_state_map[state][i*2+1]? GPIO_PIN_SET : GPIO_PIN_RESET);
     }
 }
 /* Motor speed control */
