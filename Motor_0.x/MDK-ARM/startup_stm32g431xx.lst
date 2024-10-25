@@ -679,12 +679,11 @@ ARM Macro Assembler    Page 11
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp.sp --apcs=
 interwork --depend=motor_0.1\startup_stm32g431xx.d -omotor_0.1\startup_stm32g43
-1xx.o -I.\RTE\_Motor_0.1 -IC:\Users\HuanYu-NB\AppData\Local\Arm\Packs\ARM\CMSIS
-\6.1.0\CMSIS\Core\Include -IC:\Users\HuanYu-NB\AppData\Local\Arm\Packs\Keil\STM
-32G4xx_DFP\1.6.0\Drivers\CMSIS\Device\ST\STM32G4xx\Include --predefine="__EVAL 
-SETA 1" --predefine="__UVISION_VERSION SETA 541" --predefine="STM32G431xx SETA 
-1" --predefine="_RTE_ SETA 1" --list=startup_stm32g431xx.lst startup_stm32g431x
-x.s
+1xx.o -I.\RTE\_Motor_0.1 -I"C:\Own Program Files\uVision\ARM\CMSIS\6.1.0\CMSIS\
+Core\Include" -I"C:\Own Program Files\uVision\Keil\STM32G4xx_DFP\1.6.0\Drivers\
+CMSIS\Device\ST\STM32G4xx\Include" --predefine="__EVAL SETA 1" --predefine="__U
+VISION_VERSION SETA 541" --predefine="STM32G431xx SETA 1" --predefine="_RTE_ SE
+TA 1" --list=startup_stm32g431xx.lst startup_stm32g431xx.s
 
 
 
