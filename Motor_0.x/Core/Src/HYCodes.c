@@ -33,12 +33,12 @@ GPIO_PinConfig gpio_pins_motor[] = { // Motor pin define
 };
 // Timer 2 (PWM) output on PA0
 int gpio_pin_state_map[6][6] = { // Motor pin output (state = H1*1 + H2*2 + H3*4) 546231
-    {1, 0, 0, 1, 0, 0},
+    {1, 0, 0, 0, 0, 1},
+    {0, 0, 1, 0, 0, 1},
+    {0, 1, 1, 0, 0, 0},
     {0, 1, 0, 0, 1, 0},
     {0, 0, 0, 1, 1, 0},
-    {0, 0, 1, 0, 0, 1},
-    {1, 0, 0, 0, 0, 1},
-    {0, 1, 1, 0, 0, 0}
+    {1, 0, 0, 1, 0, 0}
 };
 // Init ----------------------------------------------------------------------
 void HYCodes_Init(void){
@@ -71,9 +71,31 @@ void MotorSpin(void){
             state += (1 << (2-i));
         }
     }
-    if(state < 1 || state > 6) return;
+    switch (state)
+    {
+    case 5:
+        state = 0;
+        break;
+    case 4:
+        state = 1;
+        break;
+    case 6:
+        state = 2;
+        break;
+    case 2:
+        state = 3;
+        break;
+    case 3:
+        state = 4;
+        break;
+    case 1:
+        state = 5;
+        break;
+    default:
+        return;
+    }
     for(int i = 0; i < 6; i++) { // Motor pins write (根據狀態變化輸出)
-        HAL_GPIO_WritePin(gpio_pins_motor[i].GPIOx, gpio_pins_motor[i].GPIO_Pin_x, gpio_pin_state_map[state-1][i]? GPIO_PIN_SET : GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(gpio_pins_motor[i].GPIOx, gpio_pins_motor[i].GPIO_Pin_x, gpio_pin_state_map[state][i]? GPIO_PIN_SET : GPIO_PIN_RESET);
     }
 }
 /* Motor speed control */
