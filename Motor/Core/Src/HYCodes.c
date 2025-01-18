@@ -79,13 +79,10 @@ void HYCodes_Main(void) {
 }
 /* Interrupt ----------------------------------------------------------------- */
 void HYCodes_TIM2_IRQHandler_Before() {
-    //MotorSpin();
-    HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
-    test01++;
+    MotorSpin(motor2);
 }
 void HYCodes_TIM3_IRQHandler_Before() {
-    //MotorSpin();
-    test02++;
+    MotorSpin(motor2);
 }
 void HYCodes_EXTI15_10_Before(void) {
     MotorSpin(motor2);
@@ -97,7 +94,7 @@ void HYCodes_EXTI15_10_After(void) {
 /* Function ------------------------------------------------------------------ */
 void MotorPWMStart(MOTOR motor) {
     for(int i = 0; i < 3; i++) {
-        HAL_TIM_PWM_Start(motor.htim, motor.Channel[i]);
+        HAL_TIM_PWM_Start_IT(motor.htim, motor.Channel[i]);
     }
 }
 // Motor detect & control
