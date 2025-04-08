@@ -38,3 +38,4 @@ motor1.0\stm32g4xx_hal_msp.o: ../Core/Inc/stm32g4xx_nucleo_conf.h
 motor1.0\stm32g4xx_hal_msp.o: C:\Program_HY\Keil_v5\Keil_v5\ARM\ARM_Compiler_5.06u7\Bin\..\include\stdio.h
 motor1.0\stm32g4xx_hal_msp.o: ../Core/Inc/HYCodes.h
 motor1.0\stm32g4xx_hal_msp.o: C:\Program_HY\Keil_v5\Keil_v5\ARM\ARM_Compiler_5.06u7\Bin\..\include\stdbool.h
+motor1.0\stm32g4xx_hal_msp.o: C:\Program_HY\Keil_v5\Keil_v5\ARM\ARM_Compiler_5.06u7\Bin\..\include\string.h

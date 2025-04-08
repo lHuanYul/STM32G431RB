@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include <string.h>
 #include <stm32g431xx.h>
 // Define --------------------------------------------------------------------
 #define APB1_TIM_CLOCK 170 // MHz
@@ -21,7 +22,7 @@
 #define USART1_BAUDRATE 115200
 #define USART2_BAUDRATE 115200
 
-#define direction short
+#define direction char
 #define RIGHT -1
 #define LEFT 1
 
@@ -54,6 +55,13 @@ typedef struct {
     int pwm_value;
 } MOTOR;
 
+typedef struct {
+    uint8_t function;
+    uint8_t data[8];
+    uint8_t end;
+} UART_BUFFER;
+
+
 /* Global Var ---------------------------------------------------------------- */
 
 // Private function prototypes -----------------------------------------------
@@ -65,6 +73,7 @@ void HYCodes_TIM6_IRQHandler_Before(void);
 void HYCodes_EXTI15_10_Before(void);
 void HYCodes_USART1_IRQHandler_Before(void);
 bool MapCreate(void);
+bool UARTBufferInit(void);
 void MotorPWMStart(MOTOR);
 void MotorSpin(MOTOR);
 void MotorSpeedSet(MOTOR*, short);

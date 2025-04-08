@@ -35,8 +35,12 @@ int motor2_rpm_setpoint, motor3_rpm_setpoint;
 
 #define UART_TIME_OUT 100
 uint8_t uart_buffer_t[] = "Running\r\n";
-uint8_t uart_buffer_r[5] = {0};
+uint8_t uart_buffer_r[10] = {0};
 uint8_t buffer[20] = {0};
+
+#define TRANSFER_BUFFER_SIZE 8
+UART_BUFFER transfer_buffer[TRANSFER_BUFFER_SIZE];
+
 uint16_t running = 0;
 uint16_t test01 = 0;
 uint16_t test02 = 0;
@@ -93,6 +97,7 @@ bool gpio_pin_state_map[12][6] = {
 // Init ----------------------------------------------------------------------
 void HYCodes_Init(void) {
     MapCreate();
+    UARTBufferInit();
     derivative_t = 50 * TIMER6_COUNT / 1000;
 }
 
@@ -199,6 +204,18 @@ bool MapCreate(void) {
         }
     }
     return true;
+}
+
+// UART buffer init
+bool UARTBufferInit(void) {
+    int i, j;
+    for (i = 0; i < TRANSFER_BUFFER_SIZE; i++) {
+        transfer_buffer[i].function = 0;
+        for (j = 0; j < 8; j++) {
+            transfer_buffer[i].data[j] = 0;
+        }
+        transfer_buffer[i].end = 0x0A; // "\n"
+    }
 }
 
 // Find path
@@ -369,6 +386,7 @@ void StateRun(int adc_value) {
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
     if (huart->Instance == USART1) {
         test01++;
+        memset(uart_buffer_r, 0, sizeof(uart_buffer_r));
     }
 }
 
