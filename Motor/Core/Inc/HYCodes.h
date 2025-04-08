@@ -21,6 +21,7 @@
 #define TIM6_AUTORELOAD 50000
 #define USART1_BAUDRATE 115200
 #define USART2_BAUDRATE 115200
+#define Hello hello
 
 #define direction char
 #define RIGHT -1
