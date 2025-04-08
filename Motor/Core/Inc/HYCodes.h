@@ -46,13 +46,16 @@ typedef struct {
 } LOCATION_INPUT;
 
 typedef struct {
+    short pwm_setpoint;
     TIM_HandleTypeDef* htim;
     uint32_t Channel[3];
     GPIO_TypeDef* L_GPIOx[3];
     uint16_t L_GPIO_Pin_x[3];
     GPIO_TypeDef* D_GPIOx[3];
     uint16_t D_GPIO_Pin_x[3];
-    int pwm_value;
+    uint32_t arr_trigger_value;
+    uint16_t rotate_count;
+    float rps;
 } MOTOR;
 
 typedef struct {

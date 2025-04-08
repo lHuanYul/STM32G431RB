@@ -25,11 +25,9 @@ uint8_t origine_pos;
 uint16_t ADC0_buffer[ADC0_BUFFER_LEN] = {0};
 uint16_t ADC1_buffer[ADC1_BUFFER_LEN] = {0};
 
-#define TIMER6_COUNT 20 // 50ms * x
+#define TIMER6_COUNT 10 // 50ms * x
 uint16_t timer6_count = 0;
-uint16_t rpm_calculate = 1200 * TIMER6_COUNT;
-uint16_t motor2_rpm_count, motor3_rpm_count;
-float motor2_rpm_base, motor3_rpm_base, motor2_rpm_average, motor3_rpm_average;
+float rps_calculate = 20 / TIMER6_COUNT;
 float derivative_t, integral;
 int motor2_rpm_setpoint, motor3_rpm_setpoint;
 
@@ -48,6 +46,8 @@ uint16_t test03 = 0;
 
 // LED(A5) Button(C13)
 MOTOR motor2 = {
+    // Speed inited value
+    0,
     // AH BH CH (PA0 PA1 PB10)
     &htim2,
     {TIM_CHANNEL_1, TIM_CHANNEL_2, TIM_CHANNEL_3},
@@ -57,11 +57,12 @@ MOTOR motor2 = {
     // H1 H2 H3 
     {GPIOB, GPIOB, GPIOB},
     {GPIO_PIN_13, GPIO_PIN_14, GPIO_PIN_15},
-    // Speed inited
-    0
+    0, 0, 0
 };
 
 MOTOR motor3 = {
+    // Speed inited value
+    0,
     // AH BH CH (PA6 PA4 PC8)
     &htim3,
     {TIM_CHANNEL_1, TIM_CHANNEL_2, TIM_CHANNEL_3},
@@ -71,8 +72,7 @@ MOTOR motor3 = {
     // H1 H2 H3
     {GPIOB, GPIOB, GPIOB},
     {GPIO_PIN_13, GPIO_PIN_14, GPIO_PIN_15},
-    // Speed inited
-    0
+    0, 0, 0
 };
 
 bool gpio_pin_state_map[12][6] = {
@@ -133,19 +133,18 @@ void HYCodes_TIM3_IRQHandler_Before(void) {
 void HYCodes_TIM6_IRQHandler_Before(void) {
     timer6_count++;
     if (timer6_count >= TIMER6_COUNT) {
-        motor2_rpm_average = motor2_rpm_count * rpm_calculate / 3;
-        motor3_rpm_average = motor3_rpm_count * rpm_calculate / 3;
-        motor2_rpm_count = 0;
-        motor3_rpm_count = 0;
-        //HAL_UART_Transmit_IT(&huart1, uart_buffer_t, sizeof(uart_buffer_t));
+        motor2.rps = motor2.rotate_count * rps_calculate / 6;
+        motor3.rps = motor3.rotate_count * rps_calculate / 6;
+        motor2.rotate_count = 0;
+        motor3.rotate_count = 0;
         timer6_count = 0;
         HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
     }
 }
 
 void HYCodes_EXTI15_10_Before(void) {
-    motor2_rpm_count++;
-    motor3_rpm_count++;
+    motor2.rotate_count++;
+    motor3.rotate_count++;
     MotorSpin(motor2);
 
     HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_13);
@@ -279,9 +278,9 @@ void MotorSpin(MOTOR motor) {
     );
     // Renew state
     int _pwm;
-    if(motor.pwm_value >= 0) {
+    if(motor.arr_trigger_value >= 0) {
         // Clockwise
-        _pwm = motor.pwm_value;
+        _pwm = motor.arr_trigger_value;
         switch(state) {
             case 5: state = 0; break;
             case 4: state = 1; break;
@@ -292,7 +291,7 @@ void MotorSpin(MOTOR motor) {
             default: state = 0; break;
         }
     } else {
-        _pwm = -motor.pwm_value;
+        _pwm = -motor.arr_trigger_value;
         // Counter Clockwise
         switch(state) {
             case 2: state = 0; break;
@@ -319,7 +318,7 @@ void MotorSpin(MOTOR motor) {
 
 //Motor speed set
 void MotorSpeedSet(MOTOR* motor, short speed) {
-    if(speed >= -100 && speed <= 100) motor->pwm_value = MOTOR_TIM_AUTORELOAD * speed / 100;
+    if(speed >= -100 && speed <= 100) motor->arr_trigger_value = MOTOR_TIM_AUTORELOAD * speed / 100;
 }
 
 void MotorSpeedInitTest(void) {
@@ -369,14 +368,12 @@ void StateRun(int adc_value) {
     
 }
 
-/*void PI_Controller(void) {
-    float error = motor2_rpm_setpoint - motor2_rpm_average;  // 計算誤差
-    integral += error * derivative_t;  // 積分項累積
-    float output = Kp * error + Ki * integral;  // 計算 P I 控制輸出
+/*void PI_Controller(double measurement) {
+    double error = setpoint - measurement;  // 計算誤差
+    integral += error * dt;  // 積分項累積
+    double output = Kp * error + Ki * integral;  // 計算 P I 控制輸出
 
     pwmValue += output * 0.1;
-
-    MotorSpeedSet(&motor2, motor2.)
 
     // 限制 PWM 占空比範圍
     if (output > MAX_DUTY) output = MAX_DUTY;
