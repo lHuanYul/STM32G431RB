@@ -55,5 +55,23 @@
   "C_Cpp_Runner.useLeakSanitizer": false,
   "C_Cpp_Runner.showCompilationTime": false,
   "C_Cpp_Runner.useLinkTimeOptimization": false,
-  "C_Cpp_Runner.msvcSecureNoWarnings": false
+  "C_Cpp_Runner.msvcSecureNoWarnings": false,
+  "files.associations": {
+    "string.h": "c",
+    "stdint.h": "c",
+    "stdint-gcc.h": "c",
+    "stm32g431xx.h": "c",
+    "stdbool.h": "c",
+    "main.h": "c",
+    "compare": "c",
+    "vehicle.h": "c",
+    "usart.h": "c",
+    "map.h": "c",
+    "adc.h": "c",
+    "motor.h": "c",
+    "tim.h": "c",
+    "gpio.h": "c",
+    "my_usart.h": "c"
+  },
+  "C_Cpp.errorSquiggles": "enabled"
 }

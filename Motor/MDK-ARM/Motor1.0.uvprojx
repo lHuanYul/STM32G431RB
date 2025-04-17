@@ -395,11 +395,6 @@
           <GroupName>Application/User/Core</GroupName>
           <Files>
             <File>
-              <FileName>HYCodes.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Core\Src\HYCodes.c</FilePath>
-            </File>
-            <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/main.c</FilePath>
@@ -535,6 +530,51 @@
               <FileName>stm32g4xx_hal_msp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/stm32g4xx_hal_msp.c</FilePath>
+            </File>
+            <File>
+              <FileName>adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\mySrcCodes\adc.c</FilePath>
+            </File>
+            <File>
+              <FileName>it.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\mySrcCodes\it.c</FilePath>
+            </File>
+            <File>
+              <FileName>map.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\mySrcCodes\map.c</FilePath>
+            </File>
+            <File>
+              <FileName>motor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\mySrcCodes\motor.c</FilePath>
+            </File>
+            <File>
+              <FileName>vehicle.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\mySrcCodes\vehicle.c</FilePath>
+            </File>
+            <File>
+              <FileName>my_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\mySrcCodes\my_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>my_main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\mySrcCodes\my_main.c</FilePath>
+            </File>
+            <File>
+              <FileName>my_tim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\mySrcCodes\my_tim.c</FilePath>
+            </File>
+            <File>
+              <FileName>my_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\mySrcCodes\my_usart.c</FilePath>
             </File>
           </Files>
         </Group>
