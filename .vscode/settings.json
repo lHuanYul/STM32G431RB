@@ -71,7 +71,8 @@
     "motor.h": "c",
     "tim.h": "c",
     "gpio.h": "c",
-    "my_usart.h": "c"
+    "my_usart.h": "c",
+    "stm32g4xx_nucleo.h": "c"
   },
   "C_Cpp.errorSquiggles": "enabled"
 }
