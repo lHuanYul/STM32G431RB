@@ -71,8 +71,14 @@
     "motor.h": "c",
     "tim.h": "c",
     "gpio.h": "c",
-    "my_usart.h": "c",
-    "stm32g4xx_nucleo.h": "c"
+    "my_uart.h": "c",
+    "stm32g4xx_nucleo.h": "c",
+    "it.h": "c",
+    "stdlib.h": "c",
+    "string_view": "c",
+    "format": "c",
+    "vec.h": "c",
+    "packet.h": "c"
   },
   "C_Cpp.errorSquiggles": "enabled"
 }

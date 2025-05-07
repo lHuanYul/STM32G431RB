@@ -1,17 +1,18 @@
 {
-  "configurations": [
-    {
-      "name": "windows-mingw-w64-x64",
-      "intelliSenseMode": "windows-gcc-x64",
-      "compilerPath": "C:\\Program_HY\\msys64\\mingw64\\bin\\gcc.exe",
-      "cStandard": "c11",
-      "cppStandard": "c++17",
-      "includePath": [
-        "${workspaceFolder}/**",
-        "C:\\Program_HY\\msys64\\mingw64\\include"
-      ],
-      "defines": []
-    }
-  ],
-  "version": 4
+    "configurations": [
+        {
+            "name": "windows-mingw-w64-x64",
+            "intelliSenseMode": "windows-gcc-x64",
+            "compilerPath": "C:\\Program_HY\\msys64\\mingw64\\bin\\gcc.exe",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/Motor/Core/Inc/**",
+                "C:\\Program_HY\\msys64\\mingw64\\include"
+            ],
+            "defines": []
+        }
+    ],
+    "version": 4
 }
